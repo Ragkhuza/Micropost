@@ -28,7 +28,10 @@ router.delete('/:id', async (req, res) => {
 });
 
 async function loadPostsCollection() {
-    const client = await mongodb.MongoClient.connect('mongodb://127.0.0.1:27017', {
+    let dburl = 'mongodb://127.0.0.1:27017';
+    if (process.env.NODE_ENV === 'production') dburl = 'mongodb://testuser:test123@ds147044.mlab.com:47044/micropost';
+    
+    const client = await mongodb.MongoClient.connect(dburl, {
         useNewUrlParser: true
     });
 
