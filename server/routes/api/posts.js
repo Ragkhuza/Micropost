@@ -29,13 +29,15 @@ router.delete('/:id', async (req, res) => {
 
 async function loadPostsCollection() {
     let dburl = 'mongodb://127.0.0.1:27017';
-    if (process.env.NODE_ENV === 'production') dburl = 'mongodb://testuser:test123@ds147044.mlab.com:47044/micropost';
-    
+    if (process.env.NODE_ENV === 'production') {
+        console.log('[PRODUCTION] changing database! Line 33 in server/routes/api/posts.js');
+        dburl = 'mongodb://testuser:test123@ds147044.mlab.com:47044/micropost';
+    }
     const client = await mongodb.MongoClient.connect(dburl, {
         useNewUrlParser: true
     });
 
-    return client.db('vue_express').collection('posts');
+    return client.db('micropost').collection('posts');
 }
 
 module.exports = router;
